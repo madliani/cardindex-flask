@@ -27,8 +27,18 @@ class FlaskHelper:
         return f"{self.flask_cmd} --app {app_path} {run_cmd}"
 
 
+class PytestHelper:
+    """pytest helper."""
+
+    pytest_cmd = "pytest"
+
+    def run(self) -> str:
+        return self.pytest_cmd
+
+
 uv = UVHelper()
 flask = FlaskHelper()
+pytest = PytestHelper()
 
 
 @task
@@ -38,3 +48,10 @@ def serve(cmd):
     app_path = "./app/main.py"
 
     cmd.run(uv.run(flask.run(app_path)))
+
+
+@task
+def test(cmd):
+    """Task for server testing."""
+
+    cmd.run(uv.run(pytest.run()))
