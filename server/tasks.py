@@ -35,6 +35,6 @@ flask = FlaskHelper()
 def run(cmd):
     """Task for server running."""
 
-    app_path = "./app/app.py"
+    app_path = "./app/main.py"
 
     cmd.run(uv.run(flask.run(app_path)))
