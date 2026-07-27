@@ -1,0 +1,8 @@
+[project]
+description = "A server part of the Post project."
+name = "post-server"
+readme = "README.md"
+requires-python = ">=3.14"
+version = "0.1.0"
+
+dependencies = []
