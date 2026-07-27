@@ -32,7 +32,7 @@ flask = FlaskHelper()
 
 
 @task
-def run(cmd):
+def serve(cmd):
     """Task for server running."""
 
     app_path = "./app/main.py"
