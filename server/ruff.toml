@@ -1,0 +1,43 @@
+indent-width = 4
+line-length = 80
+target-version = "py312"
+
+[format]
+indent-style = "space"
+line-ending = "auto"
+quote-style = "double"
+
+[lint]
+fixable = ["ALL"]
+ignore = [
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106",
+    "D107",
+    "D203",
+    "D212",
+    "PERF401",
+    "TRY002",
+]
+select = [
+    "C90",
+    "D",
+    "E",
+    "ERA",
+    "F",
+    "FLY",
+    "FURB",
+    "I",
+    "N",
+    "PERF",
+    "PL",
+    "RUF",
+    "TRY",
+    "UP",
+    "W",
+]
+unfixable = []
