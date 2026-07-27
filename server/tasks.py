@@ -1,7 +1,5 @@
 from invoke import task
 
-# Helpers
-
 
 class UVHelper:
     """uv helper."""
@@ -31,9 +29,6 @@ class FlaskHelper:
 
 uv = UVHelper()
 flask = FlaskHelper()
-
-
-# Tasks
 
 
 @task
