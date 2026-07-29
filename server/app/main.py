@@ -1,3 +1,5 @@
+from enum import StrEnum
+
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -16,6 +18,11 @@ class Post(db.Model):
     desc: Mapped[str] = mapped_column(unique=False, nullable=False)
 
 
+class Status(StrEnum):
+    Error = "error"
+    Ok = "ok"
+
+
 @app.route("/")
 def index():
-    return {"status": "ok"}
+    return {"status": Status.Ok}
