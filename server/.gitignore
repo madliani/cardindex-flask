@@ -3,3 +3,6 @@
 
 # pytest
 **/.pytest_cache/
+
+# SQLAlchemy
+app/instance/*.db

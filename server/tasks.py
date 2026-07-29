@@ -27,6 +27,34 @@ class FlaskHelper:
         return f"{self.flask_cmd} --app {app_path} {run_cmd}"
 
 
+class SQLAlchemyHelper:
+    """SQLAlchemy helper."""
+
+    flask_cmd = "flask"
+    db_cmd = "db"
+
+    def init(self, app_path: str) -> str:
+        """Initialize database."""
+
+        init_cmd = "init"
+
+        return f"{self.flask_cmd} --app {app_path} {self.db_cmd} {init_cmd}"
+
+    def migrate(self, app_path: str, msg: str) -> str:
+        """Migrate command."""
+
+        migrate_cmd = "migrate"
+
+        return f'{self.flask_cmd} --app {app_path} {self.db_cmd} {migrate_cmd} -m "{msg}"'
+
+    def upgrade(self, app_path: str) -> str:
+        """Upgrade database."""
+
+        upgrade_cmd = "upgrade"
+
+        return f"{self.flask_cmd} --app {app_path} {self.db_cmd} {upgrade_cmd}"
+
+
 class PytestHelper:
     """pytest helper."""
 
@@ -36,8 +64,11 @@ class PytestHelper:
         return self.pytest_cmd
 
 
+APP_PATH = "./app/main.py"
+
 uv = UVHelper()
 flask = FlaskHelper()
+sqlalchemy = SQLAlchemyHelper()
 pytest = PytestHelper()
 
 
@@ -45,9 +76,22 @@ pytest = PytestHelper()
 def serve(cmd):
     """Task for server running."""
 
-    app_path = "./app/main.py"
+    cmd.run(uv.run(flask.run(APP_PATH)))
 
-    cmd.run(uv.run(flask.run(app_path)))
+
+@task
+def db(cmd, subcmd, msg=""):
+    """Task for database initializing."""
+
+    if subcmd == "init":
+        cmd.run(uv.run(sqlalchemy.init(APP_PATH)))
+
+        return
+
+    if subcmd == "migrate":
+        cmd.run(uv.run(sqlalchemy.migrate(APP_PATH, msg)))
+
+        return
 
 
 @task
