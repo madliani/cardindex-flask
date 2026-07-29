@@ -26,6 +26,13 @@ class FlaskHelper:
 
         return f"{self.flask_cmd} --app {app_path} {run_cmd}"
 
+    def debug(self, app_path: str) -> str:
+        """Run Flask server in debugging mode."""
+
+        debug_cmd = "run --debug"
+
+        return f"{self.flask_cmd} --app {app_path} {debug_cmd}"
+
 
 class SQLAlchemyHelper:
     """SQLAlchemy helper."""
@@ -77,6 +84,13 @@ def serve(cmd):
     """Task for server running."""
 
     cmd.run(uv.run(flask.run(APP_PATH)))
+
+
+@task
+def debug(cmd):
+    """Task for server running in debugging mode."""
+
+    cmd.run(uv.run(flask.debug(APP_PATH)))
 
 
 @task
