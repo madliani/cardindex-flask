@@ -26,3 +26,8 @@ class Status(StrEnum):
 @app.route("/")
 def index():
     return {"status": Status.Ok}
+
+
+@app.route("/health")
+def health():
+    return {"status": Status.Ok}
