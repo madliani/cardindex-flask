@@ -13,7 +13,7 @@ class BaseModel(DeclarativeBase):
     pass
 
 
-db = SQLAlchemy(app=app, model_class=BaseModel)
+db = SQLAlchemy(app=app, metadata=BaseModel.metadata, model_class=BaseModel)
 migrate = Migrate(app=app, db=db)
 
 
