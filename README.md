@@ -1,4 +1,3 @@
-# Posts
+# CardIndex Flask
 
-This is an example of a full stack project built with Flask (server side) and
-React (client side).
+This is a Flask-based server side of a full stack project CardIndex.
