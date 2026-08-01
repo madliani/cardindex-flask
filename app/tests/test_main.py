@@ -1,4 +1,9 @@
-def test_hello_world(test_client):
+from json import loads
+
+from app.main import Status
+
+
+def test_index(test_client):
     response = test_client.get("/")
 
-    assert response.data.decode() == "Hello, World!"
+    assert loads(response.data.decode()) == {"status": Status.Ok}
