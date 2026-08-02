@@ -82,6 +82,6 @@ def migrate(cmd, msg=""):
 
 @task
 def test(cmd):
-    """Task for server testing."""
+    """Task for application testing."""
 
     cmd.run(uv.run(pytest.run()))
