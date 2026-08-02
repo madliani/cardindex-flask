@@ -5,4 +5,4 @@
 **/.pytest_cache/
 
 # SQLAlchemy
-app/instance/*.db
+server/instance/*.db

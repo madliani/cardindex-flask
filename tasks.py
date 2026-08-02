@@ -57,7 +57,7 @@ class PytestHelper:
         return self.pytest_cmd
 
 
-APP_PATH = "./app/main.py"
+APP_PATH = "./server/main.py"
 
 uv = UVHelper()
 flask = FlaskHelper()

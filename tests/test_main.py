@@ -1,6 +1,6 @@
 from json import loads
 
-from app.main import Status
+from server.main import Status
 
 
 def test_index(test_client):
