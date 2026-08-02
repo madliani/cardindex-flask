@@ -16,7 +16,7 @@ migrate = Migrate(app=app, db=db)
 
 
 # ty:ignore[unsupported-base]
-class Card(db.Model):
+class CardModel(db.Model):
     __tablename__ = "cards"
 
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -28,22 +28,22 @@ class CardRepository:
     def __init__(self, db: SQLAlchemy):
         self.db = db
 
-    def get_all(self) -> list[Card]:
-        return self.db.session.query(Card).all()
+    def get_all(self) -> list[CardModel]:
+        return self.db.session.query(CardModel).all()
 
-    def add(self, title: str, desc: str) -> Card:
-        card = Card(title=title, desc=desc)
+    def add(self, title: str, desc: str) -> CardModel:
+        card = CardModel(title=title, desc=desc)
 
         self.db.session.add(card)
         self.db.session.commit()
 
         return card
 
-    def get(self, id: int) -> Card | None:
-        return self.db.session.query(Card).get(id)
+    def get(self, id: int) -> CardModel | None:
+        return self.db.session.query(CardModel).get(id)
 
-    def update(self, id: int, title: str, desc: str) -> Card | None:
-        card = self.db.session.query(Card).get(id)
+    def update(self, id: int, title: str, desc: str) -> CardModel | None:
+        card = self.db.session.query(CardModel).get(id)
 
         if card is None:
             return None
@@ -55,8 +55,8 @@ class CardRepository:
 
         return card
 
-    def delete(self, id: int) -> Card | None:
-        card = self.db.session.query(Card).get(id)
+    def delete(self, id: int) -> CardModel | None:
+        card = self.db.session.query(CardModel).get(id)
 
         if card is None:
             return None
@@ -68,7 +68,7 @@ class CardRepository:
 
 
 class OneCardSerializer:
-    def __init__(self, card: Card):
+    def __init__(self, card: CardModel):
         self.card = card
 
     def serialize(self):
@@ -80,7 +80,7 @@ class OneCardSerializer:
 
 
 class ManyCardSerializer:
-    def __init__(self, cards: list[Card]):
+    def __init__(self, cards: list[CardModel]):
         self.cards = cards
 
     def serialize(self):
