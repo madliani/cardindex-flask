@@ -89,7 +89,7 @@ def db(cmd, subcmd, msg=""):
         return
 
     if subcmd == "migrate":
-        cmd.run(uv.run(sqlalchemy.migrate(APP_PATH, msg)))
+        cmd.run(uv.run(sqlalchemy.migrate(app_path=APP_PATH, msg=msg)))
         cmd.run(uv.run(sqlalchemy.upgrade(APP_PATH)))
 
         return
