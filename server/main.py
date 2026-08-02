@@ -27,7 +27,7 @@ class CardRepository:
     def __init__(self, db: SQLAlchemy):
         self.db = db
 
-    def get_cards(self) -> list[Card]:
+    def get_all(self) -> list[Card]:
         return self.db.session.query(Card).all()
 
     def add_card(self, title: str, desc: str) -> Card:
@@ -38,10 +38,10 @@ class CardRepository:
 
         return card
 
-    def get_card(self, id: int) -> Card | None:
+    def get(self, id: int) -> Card | None:
         return self.db.session.query(Card).get(id)
 
-    def update_card(self, id: int, title: str, desc: str) -> Card | None:
+    def update(self, id: int, title: str, desc: str) -> Card | None:
         card = self.db.session.query(Card).get(id)
 
         if card is None:
@@ -54,7 +54,7 @@ class CardRepository:
 
         return card
 
-    def delete_card(self, id: int) -> Card | None:
+    def delete(self, id: int) -> Card | None:
         card = self.db.session.query(Card).get(id)
 
         if card is None:
@@ -135,7 +135,7 @@ def cards():
     if request.method == HTTPMethod.GET:
         card_repository = CardRepository(db)
 
-        all_cards = card_repository.get_cards()
+        all_cards = card_repository.get_all()
 
         return {
             "status": Status.OK,
@@ -163,7 +163,7 @@ def card_detail(id: int):
     if request.method == HTTPMethod.GET:
         card_repository = CardRepository(db)
 
-        card = card_repository.get_card(id)
+        card = card_repository.get(id)
 
         if card is None:
             error = NotFound(f"Card with id = {id} not found")
@@ -184,7 +184,7 @@ def card_update(id: int):
     if request.method == HTTPMethod.PUT:
         card_repository = CardRepository(db)
 
-        card = card_repository.update_card(
+        card = card_repository.update(
             id=id, title=request.json["title"], desc=request.json["desc"]
         )
 
@@ -207,7 +207,7 @@ def card_delete(id: int):
     if request.method == HTTPMethod.DELETE:
         card_repository = CardRepository(db)
 
-        card = card_repository.delete_card(id)
+        card = card_repository.delete(id)
 
         if card is None:
             error = NotFound(f"Card with id = {id} not found")
