@@ -73,14 +73,11 @@ def serve(cmd, debug=False):
 
 
 @task
-def db(cmd, subcmd, msg=""):
+def migrate(cmd, msg=""):
     """Task for database migrating."""
 
-    if subcmd == "migrate":
-        cmd.run(uv.run(sqlalchemy.migrate(app_path=APP_PATH, msg=msg)))
-        cmd.run(uv.run(sqlalchemy.upgrade(APP_PATH)))
-
-        return
+    cmd.run(uv.run(sqlalchemy.migrate(app_path=APP_PATH, msg=msg)))
+    cmd.run(uv.run(sqlalchemy.upgrade(APP_PATH)))
 
 
 @task
