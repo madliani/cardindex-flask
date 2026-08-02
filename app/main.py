@@ -112,7 +112,7 @@ class Status(StrEnum):
 
 @app.route("/")
 def index():
-    return {"status": Status.OK}
+    return {"status": Status.OK}, 200
 
 
 @app.route("/health")
