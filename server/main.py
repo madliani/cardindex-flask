@@ -1,4 +1,5 @@
 from enum import StrEnum
+from http import HTTPStatus
 
 from flask import Flask, request
 from flask_migrate import Migrate
@@ -122,12 +123,12 @@ class Status(StrEnum):
 
 @app.route(RoutePath.INDEX)
 def index():
-    return {"status": Status.OK}, 200
+    return {"status": Status.OK}, HTTPStatus.OK.value
 
 
 @app.route(RoutePath.HEALTH)
 def health():
-    return {"status": Status.OK}, 200
+    return {"status": Status.OK}, HTTPStatus.OK.value
 
 
 @app.route(RoutePath.CARDS, methods=[HTTPMethod.GET])
@@ -140,7 +141,7 @@ def cards():
         return {
             "status": Status.OK,
             "cards": ManyCardSerializer(all_cards).serialize(),
-        }, 200
+        }, HTTPStatus.OK.value
 
 
 @app.route(RoutePath.CARD_ADD, methods=[HTTPMethod.POST])
@@ -155,7 +156,7 @@ def card_add():
         return {
             "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
-        }, 200
+        }, HTTPStatus.OK.value
 
 
 @app.route(RoutePath.CARD_DETAIL, methods=[HTTPMethod.GET])
@@ -176,7 +177,7 @@ def card_detail(id: int):
         return {
             "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
-        }, 200
+        }, HTTPStatus.OK.value
 
 
 @app.route(RoutePath.CARD_UPDATE, methods=[HTTPMethod.PUT])
@@ -199,7 +200,7 @@ def card_update(id: int):
         return {
             "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
-        }, 200
+        }, HTTPStatus.OK.value
 
 
 @app.route(RoutePath.CARD_DELETE, methods=[HTTPMethod.DELETE])
@@ -220,4 +221,4 @@ def card_delete(id: int):
         return {
             "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
-        }, 200
+        }, HTTPStatus.OK.value
