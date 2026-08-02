@@ -14,8 +14,8 @@ migrate = Migrate(app=app, db=db)
 
 
 # ty:ignore[unsupported-base]
-class PostCard(db.Model):
-    __tablename__ = "post_cards"
+class Card(db.Model):
+    __tablename__ = "cards"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str] = mapped_column(unique=False, nullable=False)
