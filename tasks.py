@@ -43,9 +43,9 @@ class SQLAlchemyHelper:
     def migrate(self, app_path: str, msg: str) -> str:
         """Migrate command."""
 
-        migrate_cmd = "migrate"
+        migrate_cmd = f'migrate -m "{msg}"' if msg else "migrate"
 
-        return f'{self.flask_cmd} --app {app_path} {self.db_cmd} {migrate_cmd} -m "{msg}"'
+        return f"{self.flask_cmd} --app {app_path} {self.db_cmd} {migrate_cmd}"
 
     def upgrade(self, app_path: str) -> str:
         """Upgrade database."""
