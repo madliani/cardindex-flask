@@ -30,7 +30,7 @@ class CardRepository:
     def get_all(self) -> list[Card]:
         return self.db.session.query(Card).all()
 
-    def add_card(self, title: str, desc: str) -> Card:
+    def add(self, title: str, desc: str) -> Card:
         card = Card(title=title, desc=desc)
 
         self.db.session.add(card)
@@ -148,7 +148,7 @@ def card_add():
     if request.method == HTTPMethod.POST:
         card_repository = CardRepository(db)
 
-        card = card_repository.add_card(
+        card = card_repository.add(
             title=request.json["title"], desc=request.json["desc"]
         )
 
