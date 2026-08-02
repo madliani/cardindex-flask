@@ -125,11 +125,11 @@ def cards():
     if request.method == HTTPMethod.GET:
         card_repository = CardRepository(db)
 
-        card_list = card_repository.get_cards()
+        all_cards = card_repository.get_cards()
 
         return {
             "status": Status.OK,
-            "cards": ManyCardSerializer(card_list).serialize(),
+            "cards": ManyCardSerializer(all_cards).serialize(),
         }, 200
 
 
