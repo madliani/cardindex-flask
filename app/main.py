@@ -117,7 +117,7 @@ def index():
 
 @app.route("/health")
 def health():
-    return {"status": Status.OK}
+    return {"status": Status.OK}, 200
 
 
 @app.route("/cards", methods=[HTTPMethod.GET])
