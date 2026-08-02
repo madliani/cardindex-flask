@@ -8,7 +8,7 @@ def test_index(test_client):
     data = response.data.decode()
     json_data = loads(data)
 
-    assert json_data == {"status": Status.Ok}
+    assert json_data == {"status": Status.OK}
 
 
 def test_health(test_client):
@@ -16,4 +16,4 @@ def test_health(test_client):
     data = response.data.decode()
     json_data = loads(data)
 
-    assert json_data == {"status": Status.Ok}
+    assert json_data == {"status": Status.OK}

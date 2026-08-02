@@ -106,18 +106,18 @@ class HTTPMethod(StrEnum):
 
 
 class Status(StrEnum):
-    Error = "error"
-    Ok = "ok"
+    ERROR = "error"
+    OK = "ok"
 
 
 @app.route("/")
 def index():
-    return {"status": Status.Ok}
+    return {"status": Status.OK}
 
 
 @app.route("/health")
 def health():
-    return {"status": Status.Ok}
+    return {"status": Status.OK}
 
 
 @app.route("/cards", methods=[HTTPMethod.GET])
@@ -128,7 +128,7 @@ def cards():
         card_list = card_repository.get_cards()
 
         return {
-            "status": Status.Ok,
+            "status": Status.OK,
             "cards": ManyCardSerializer(card_list).serialize(),
         }, 200
 
@@ -143,7 +143,7 @@ def card_add():
         )
 
         return {
-            "status": Status.Ok,
+            "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
         }, 200
 
@@ -159,12 +159,12 @@ def card_detail(id: int):
             error = NotFound(f"Card with id = {id} not found")
 
             return {
-                "status": Status.Error,
+                "status": Status.ERROR,
                 "error": HTTPExceptionSerializer(error).serialize(),
             }, error.code
 
         return {
-            "status": Status.Ok,
+            "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
         }, 200
 
@@ -182,12 +182,12 @@ def card_update(id: int):
             error = NotFound(f"Card with id = {id} not found")
 
             return {
-                "status": Status.Error,
+                "status": Status.ERROR,
                 "error": HTTPExceptionSerializer(error).serialize(),
             }, error.code
 
         return {
-            "status": Status.Ok,
+            "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
         }, 200
 
@@ -203,11 +203,11 @@ def card_delete(id: int):
             error = NotFound(f"Card with id = {id} not found")
 
             return {
-                "status": Status.Error,
+                "status": Status.ERROR,
                 "error": HTTPExceptionSerializer(error).serialize(),
             }, error.code
 
         return {
-            "status": Status.Ok,
+            "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
         }, 200
