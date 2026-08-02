@@ -19,19 +19,12 @@ class FlaskHelper:
 
     flask_cmd = "flask"
 
-    def run(self, app_path: str) -> str:
+    def run(self, app_path: str, debug=False) -> str:
         """Run Flask server."""
 
-        run_cmd = "run"
+        run_cmd = "run --debug" if debug else "run"
 
         return f"{self.flask_cmd} --app {app_path} {run_cmd}"
-
-    def debug(self, app_path: str) -> str:
-        """Run Flask server in debugging mode."""
-
-        debug_cmd = "run --debug"
-
-        return f"{self.flask_cmd} --app {app_path} {debug_cmd}"
 
 
 class SQLAlchemyHelper:
@@ -80,17 +73,10 @@ pytest = PytestHelper()
 
 
 @task
-def serve(cmd):
+def serve(cmd, debug=False):
     """Task for server running."""
 
-    cmd.run(uv.run(flask.run(APP_PATH)))
-
-
-@task
-def debug(cmd):
-    """Task for server running in debugging mode."""
-
-    cmd.run(uv.run(flask.debug(APP_PATH)))
+    cmd.run(uv.run(flask.run(app_path=APP_PATH, debug=debug)))
 
 
 @task
