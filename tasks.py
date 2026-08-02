@@ -67,7 +67,7 @@ pytest = PytestHelper()
 
 @task
 def serve(cmd, debug=False):
-    """Task for server running."""
+    """Task for server starting."""
 
     cmd.run(uv.run(flask.serve(app_path=APP_PATH, debug=debug)))
 
