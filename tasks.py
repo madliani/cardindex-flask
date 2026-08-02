@@ -19,7 +19,7 @@ class FlaskHelper:
 
     flask_cmd = "flask"
 
-    def run(self, app_path: str, debug=False) -> str:
+    def serve(self, app_path: str, debug=False) -> str:
         """Run Flask server."""
 
         run_cmd = "run --debug" if debug else "run"
@@ -76,7 +76,7 @@ pytest = PytestHelper()
 def serve(cmd, debug=False):
     """Task for server running."""
 
-    cmd.run(uv.run(flask.run(app_path=APP_PATH, debug=debug)))
+    cmd.run(uv.run(flask.serve(app_path=APP_PATH, debug=debug)))
 
 
 @task
