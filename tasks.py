@@ -33,13 +33,6 @@ class SQLAlchemyHelper:
     flask_cmd = "flask"
     db_cmd = "db"
 
-    def init(self, app_path: str) -> str:
-        """Initialize database."""
-
-        init_cmd = "init"
-
-        return f"{self.flask_cmd} --app {app_path} {self.db_cmd} {init_cmd}"
-
     def migrate(self, app_path: str, msg: str) -> str:
         """Migrate command."""
 
@@ -81,12 +74,7 @@ def serve(cmd, debug=False):
 
 @task
 def db(cmd, subcmd, msg=""):
-    """Task for database initializing."""
-
-    if subcmd == "init":
-        cmd.run(uv.run(sqlalchemy.init(APP_PATH)))
-
-        return
+    """Task for database migrating."""
 
     if subcmd == "migrate":
         cmd.run(uv.run(sqlalchemy.migrate(app_path=APP_PATH, msg=msg)))
