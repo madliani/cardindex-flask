@@ -11,7 +11,7 @@ from werkzeug.exceptions import HTTPException, NotFound
 DEFAULT_HOST = "localhost"
 DEFAULT_PORT = 5_000
 
-host = os.environ.get("HOST") or DEFAULT_HOST
+host = str(os.environ.get("HOST") or DEFAULT_HOST)
 port = int(os.environ.get("PORT") or DEFAULT_PORT)
 is_debug = bool(os.environ.get("DEBUG"))
 
