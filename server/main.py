@@ -247,4 +247,4 @@ def card_delete(id: int):
 app = make_app(bp=bp, db=db, migrate=migrate)
 
 if __name__ == "__main__":
-    app.run(host=host, port=port, is_debug=is_debug)
+    app.run(host=host, port=port, debug=is_debug)
