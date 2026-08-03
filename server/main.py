@@ -28,7 +28,9 @@ class App:
         db.init_app(self.app)
         migrate.init_app(app=self.app, db=db)
 
-    def run(self, host: str | None, port: int | None, is_debug: bool | None):
+    def run(
+        self, host: str | None, port: int | None, is_debug: bool | None
+    ) -> None:
         self.app.run(host=host, port=port, debug=is_debug)
 
 
