@@ -8,6 +8,11 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Mapped, mapped_column
 from werkzeug.exceptions import HTTPException, NotFound
 
+DEFAULT_HOST = "localhost"
+DEFAULT_PORT = 5_000
+
+host = os.environ.get("HOST") or DEFAULT_HOST
+port = int(os.environ.get("PORT") or DEFAULT_PORT)
 is_debug = bool(os.environ.get("DEBUG"))
 
 app = Flask(__name__)
@@ -228,4 +233,4 @@ def card_delete(id: int):
 
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=5_000, debug=is_debug)
+    app.run(host=host, port=port, debug=is_debug)
