@@ -26,12 +26,12 @@ class FlaskHelper:
 
     flask_cmd = "flask"
 
-    def serve(self, app_path: str, debug=False) -> str:
-        """Run Flask server."""
+    def shell(self, app_path: str) -> str:
+        """Run Flask shell."""
 
-        run_cmd = "run --debug" if debug else "run"
+        shell_cmd = "shell"
 
-        return f"{self.flask_cmd} --app {app_path} {run_cmd}"
+        return f"{self.flask_cmd} --app {app_path} {shell_cmd}"
 
 
 class SQLAlchemyHelper:
@@ -96,3 +96,10 @@ def test(cmd):
     """Task for application testing."""
 
     cmd.run(uv.run(pytest.run()))
+
+
+@task
+def shell(cmd):
+    """Task for Flask shell starting."""
+
+    cmd.run(uv.run(flask.shell(APP_PATH)))
