@@ -16,10 +16,9 @@ port = int(os.environ.get("PORT") or DEFAULT_PORT)
 is_debug = bool(os.environ.get("DEBUG"))
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cardindex.db"
-
 bp = Blueprint("api", __name__)
 
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cardindex.db"
 db = SQLAlchemy(app=app)
 migrate = Migrate(app=app, db=db)
 
