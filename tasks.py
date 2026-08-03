@@ -1,6 +1,13 @@
 from invoke import task
 
 
+class ENVHelper:
+    """Environment variable helper."""
+
+    def with_env(self, cmd: str, env: str) -> str:
+        return f"{env} {cmd}"
+
+
 class UVHelper:
     """uv helper."""
 
@@ -59,6 +66,7 @@ class PytestHelper:
 
 APP_PATH = "./server/main.py"
 
+env = ENVHelper()
 uv = UVHelper()
 flask = FlaskHelper()
 sqlalchemy = SQLAlchemyHelper()
@@ -69,7 +77,10 @@ pytest = PytestHelper()
 def serve(cmd, debug=False):
     """Task for server starting."""
 
-    cmd.run(uv.run(flask.serve(app_path=APP_PATH, debug=debug)))
+    if debug:
+        cmd.run(env.with_env(cmd=uv.run(APP_PATH), env="DEBUG=True"))
+
+    cmd.run(uv.run(APP_PATH))
 
 
 @task

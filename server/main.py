@@ -1,3 +1,4 @@
+import os
 from enum import StrEnum
 from http import HTTPStatus
 
@@ -6,6 +7,8 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Mapped, mapped_column
 from werkzeug.exceptions import HTTPException, NotFound
+
+is_debug = bool(os.environ.get("DEBUG"))
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cardindex.db"
@@ -222,3 +225,7 @@ def card_delete(id: int):
             "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
         }, HTTPStatus.OK.value
+
+
+if __name__ == "__main__":
+    app.run(host="localhost", port=5_000, debug=is_debug)
