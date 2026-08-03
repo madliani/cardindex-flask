@@ -15,12 +15,26 @@ host = str(os.environ.get("HOST") or DEFAULT_HOST)
 port = int(os.environ.get("PORT") or DEFAULT_PORT)
 is_debug = bool(os.environ.get("DEBUG"))
 
-app = Flask(__name__)
-bp = Blueprint("api", __name__)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cardindex.db"
-db = SQLAlchemy(app=app)
-migrate = Migrate(app=app, db=db)
+class App:
+    """Flask application factory."""
+
+    def __init__(self, bp: Blueprint, db: SQLAlchemy, migrate: Migrate):
+        self.app = Flask(__name__)
+
+        self.app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cardindex.db"
+
+        self.app.register_blueprint(bp)
+        db.init_app(self.app)
+        migrate.init_app(app=self.app, db=db)
+
+    def run(self, host: str | None, port: int | None, is_debug: bool | None):
+        self.app.run(host=host, port=port, debug=is_debug)
+
+
+bp = Blueprint("api", __name__)
+db = SQLAlchemy()
+migrate = Migrate()
 
 
 # ty:ignore[unsupported-base]
@@ -233,5 +247,6 @@ def card_delete(id: int):
 
 
 if __name__ == "__main__":
-    app.register_blueprint(bp)
-    app.run(host=host, port=port, debug=is_debug)
+    app = App(bp=bp, db=db, migrate=migrate)
+
+    app.run(host=host, port=port, is_debug=is_debug)
