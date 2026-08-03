@@ -21,19 +21,6 @@ class UVHelper:
         return f"{self.uv_cmd} {run_cmd} {cmd}"
 
 
-class FlaskHelper:
-    """Flask helper."""
-
-    flask_cmd = "flask"
-
-    def shell(self, app_path: str) -> str:
-        """Run Flask shell."""
-
-        shell_cmd = "shell"
-
-        return f"{self.flask_cmd} --app {app_path} {shell_cmd}"
-
-
 class SQLAlchemyHelper:
     """SQLAlchemy helper."""
 
@@ -68,7 +55,6 @@ APP_PATH = "./server/main.py"
 
 env = ENVHelper()
 uv = UVHelper()
-flask = FlaskHelper()
 sqlalchemy = SQLAlchemyHelper()
 pytest = PytestHelper()
 
@@ -96,10 +82,3 @@ def test(cmd):
     """Task for application testing."""
 
     cmd.run(uv.run(pytest.run()))
-
-
-@task
-def shell(cmd):
-    """Task for Flask shell starting."""
-
-    cmd.run(uv.run(flask.shell(APP_PATH)))
