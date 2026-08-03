@@ -16,22 +16,18 @@ port = int(os.environ.get("PORT") or DEFAULT_PORT)
 is_debug = bool(os.environ.get("DEBUG"))
 
 
-class App:
+def make_app(bp: Blueprint, db: SQLAlchemy, migrate: Migrate) -> Flask:
     """Flask application factory."""
 
-    def __init__(self, bp: Blueprint, db: SQLAlchemy, migrate: Migrate):
-        self.app = Flask(__name__)
+    app = Flask(__name__)
 
-        self.app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cardindex.db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cardindex.db"
 
-        self.app.register_blueprint(bp)
-        db.init_app(self.app)
-        migrate.init_app(app=self.app, db=db)
+    app.register_blueprint(bp)
+    db.init_app(app)
+    migrate.init_app(app=app, db=db)
 
-    def run(
-        self, host: str | None, port: int | None, is_debug: bool | None
-    ) -> None:
-        self.app.run(host=host, port=port, debug=is_debug)
+    return app
 
 
 bp = Blueprint("api", __name__)
@@ -248,7 +244,7 @@ def card_delete(id: int):
         }, HTTPStatus.OK.value
 
 
-if __name__ == "__main__":
-    app = App(bp=bp, db=db, migrate=migrate)
+app = make_app(bp=bp, db=db, migrate=migrate)
 
+if __name__ == "__main__":
     app.run(host=host, port=port, is_debug=is_debug)
