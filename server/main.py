@@ -2,7 +2,7 @@ import os
 from enum import StrEnum
 from http import HTTPStatus
 
-from flask import Flask, request
+from flask import Blueprint, Flask, request
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Mapped, mapped_column
@@ -18,6 +18,7 @@ is_debug = bool(os.environ.get("DEBUG"))
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cardindex.db"
 
+bp = Blueprint("api", __name__)
 
 db = SQLAlchemy(app=app)
 migrate = Migrate(app=app, db=db)
@@ -129,17 +130,17 @@ class Status(StrEnum):
     OK = "ok"
 
 
-@app.route(RoutePath.INDEX)
+@bp.route(RoutePath.INDEX)
 def index():
     return {"status": Status.OK}, HTTPStatus.OK.value
 
 
-@app.route(RoutePath.HEALTH)
+@bp.route(RoutePath.HEALTH)
 def health():
     return {"status": Status.OK}, HTTPStatus.OK.value
 
 
-@app.route(RoutePath.CARDS, methods=[HTTPMethod.GET])
+@bp.route(RoutePath.CARDS, methods=[HTTPMethod.GET])
 def cards():
     if request.method == HTTPMethod.GET:
         card_repository = CardRepository(db)
@@ -152,7 +153,7 @@ def cards():
         }, HTTPStatus.OK.value
 
 
-@app.route(RoutePath.CARD_ADD, methods=[HTTPMethod.POST])
+@bp.route(RoutePath.CARD_ADD, methods=[HTTPMethod.POST])
 def card_add():
     if request.method == HTTPMethod.POST:
         card_repository = CardRepository(db)
@@ -167,7 +168,7 @@ def card_add():
         }, HTTPStatus.OK.value
 
 
-@app.route(RoutePath.CARD_DETAIL, methods=[HTTPMethod.GET])
+@bp.route(RoutePath.CARD_DETAIL, methods=[HTTPMethod.GET])
 def card_detail(id: int):
     if request.method == HTTPMethod.GET:
         card_repository = CardRepository(db)
@@ -188,7 +189,7 @@ def card_detail(id: int):
         }, HTTPStatus.OK.value
 
 
-@app.route(RoutePath.CARD_UPDATE, methods=[HTTPMethod.PUT])
+@bp.route(RoutePath.CARD_UPDATE, methods=[HTTPMethod.PUT])
 def card_update(id: int):
     if request.method == HTTPMethod.PUT:
         card_repository = CardRepository(db)
@@ -211,7 +212,7 @@ def card_update(id: int):
         }, HTTPStatus.OK.value
 
 
-@app.route(RoutePath.CARD_DELETE, methods=[HTTPMethod.DELETE])
+@bp.route(RoutePath.CARD_DELETE, methods=[HTTPMethod.DELETE])
 def card_delete(id: int):
     if request.method == HTTPMethod.DELETE:
         card_repository = CardRepository(db)
@@ -233,4 +234,5 @@ def card_delete(id: int):
 
 
 if __name__ == "__main__":
+    app.register_blueprint(bp)
     app.run(host=host, port=port, debug=is_debug)
