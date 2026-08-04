@@ -66,6 +66,8 @@ def serve(cmd, debug=False):
     if debug:
         cmd.run(env.with_env(cmd=uv.run(APP_PATH), env="DEBUG=True"))
 
+        return
+
     cmd.run(uv.run(APP_PATH))
 
 
