@@ -1,13 +1,6 @@
 from invoke import task
 
 
-class ENVHelper:
-    """Environment variable helper."""
-
-    def with_env(self, cmd: str, env: str) -> str:
-        return f"{env} {cmd}"
-
-
 class DockerHelper:
     """Docker helper."""
 
@@ -89,7 +82,6 @@ PROJECT_ROOT = "./"
 FLASK_APP = "./server/main.py"
 COMPOSE_FILE = "./postgres.compose.yml"
 
-env = ENVHelper()
 docker = DockerHelper()
 uv = UVHelper()
 sqlalchemy = SQLAlchemyHelper()
@@ -119,13 +111,8 @@ def clear(cmd):
 
 
 @task
-def serve(cmd, debug=False):
+def serve(cmd):
     """Task for server starting."""
-
-    if debug:
-        cmd.run(env.with_env(cmd=uv.run(FLASK_APP), env="DEBUG=True"))
-
-        return
 
     cmd.run(uv.run(FLASK_APP))
 

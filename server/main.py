@@ -8,6 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Mapped, mapped_column
 from werkzeug.exceptions import HTTPException, NotFound
 
+load_dotenv()
+
 FLASK_HOST = "localhost"
 FLASK_PORT = 5_000
 
@@ -17,8 +19,6 @@ is_debug_mode = bool(os.environ.get("DEBUG"))
 
 POSTGRES_HOST = "localhost"
 POSTGRES_PROVIDER = "postgresql+psycopg"
-
-load_dotenv()
 
 postgres_host = str(os.environ.get("POSTGRES_HOST") or POSTGRES_HOST)
 postgres_db = os.environ["POSTGRES_DB"]
