@@ -21,12 +21,13 @@ POSTGRES_PROVIDER = "postgresql+psycopg"
 
 load_dotenv()
 
+postgres_host = str(os.environ.get("POSTGRES_HOST") or POSTGRES_HOST)
 postgres_db = os.environ["POSTGRES_DB"]
 postgres_password = os.environ["POSTGRES_PASSWORD"]
 postgres_port = os.environ["POSTGRES_PORT"]
 postgres_user = os.environ["POSTGRES_USER"]
 postgres_credentials = f"{postgres_user}:{postgres_password}"
-postgres_url = f"{POSTGRES_HOST}:{postgres_port}"
+postgres_url = f"{postgres_host}:{postgres_port}"
 postgres_uri = (
     f"{POSTGRES_PROVIDER}://{postgres_credentials}@{postgres_url}/{postgres_db}"
 )
