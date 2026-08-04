@@ -13,7 +13,7 @@ FLASK_PORT = 5_000
 
 flask_host = str(os.environ.get("HOST") or FLASK_HOST)
 flask_port = int(os.environ.get("PORT") or FLASK_PORT)
-is_debug = bool(os.environ.get("DEBUG"))
+is_debug_mode = bool(os.environ.get("DEBUG"))
 
 POSTGRES_HOST = "localhost"
 POSTGRES_PROVIDER = "postgresql+psycopg"
@@ -263,4 +263,4 @@ def card_delete(id: int):
 app = make_app(bp=bp, db=db, migrate=migrate)
 
 if __name__ == "__main__":
-    app.run(host=flask_host, port=flask_port, debug=is_debug)
+    app.run(host=flask_host, port=flask_port, debug=is_debug_mode)
