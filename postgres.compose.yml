@@ -12,6 +12,7 @@ services:
     ports:
       - ${ADMINER_PORT:-8080}:8080
     restart: always
+    tty: false
 
   postgres:
     env_file:
@@ -27,6 +28,7 @@ services:
     restart: always
     volumes:
       - postgres_data:/var/lib/postgresql/docker
+    tty: false
 
 volumes:
   postgres_data:
