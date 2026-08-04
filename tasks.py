@@ -74,6 +74,18 @@ class PytestHelper:
         return self.pytest_cmd
 
 
+class RuffHelper:
+    """Ruff helper."""
+
+    ruff_cmd = "ruff"
+
+    def check(self, path: str):
+        check_cmd = "check --fix"
+
+        return f"{self.ruff_cmd} {check_cmd} {path}"
+
+
+PROJECT_ROOT = "./"
 FLASK_APP = "./server/main.py"
 COMPOSE_FILE = "./postgres.compose.yml"
 
@@ -82,6 +94,7 @@ docker = DockerHelper()
 uv = UVHelper()
 sqlalchemy = SQLAlchemyHelper()
 pytest = PytestHelper()
+ruff = RuffHelper()
 
 
 @task
@@ -130,3 +143,10 @@ def test(cmd):
     """Task for application testing."""
 
     cmd.run(uv.run(pytest.run()))
+
+
+@task
+def check(cmd):
+    """Task for project linting and formatting."""
+
+    cmd.run(uv.run(ruff.check(PROJECT_ROOT)))
