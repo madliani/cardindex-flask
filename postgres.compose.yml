@@ -25,3 +25,8 @@ services:
     ports:
       - ${POSTGRES_PORT:-5432}:5432
     restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/docker
+
+volumes:
+  postgres_data:
