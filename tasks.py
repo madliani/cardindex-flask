@@ -13,25 +13,17 @@ class DockerHelper:
 
     docker_cmd = "docker"
 
-    def up(self, config_path: str | None = None) -> str:
+    def up(self, config_path: str) -> str:
         compose_cmd = "compose"
         up_cmd = "up -d"
 
-        if config_path is not None:
-            return f"{self.docker_cmd} {compose_cmd} -f {config_path} {up_cmd}"
+        return f"{self.docker_cmd} {compose_cmd} -f {config_path} {up_cmd}"
 
-        return f"{self.docker_cmd} {compose_cmd} {up_cmd}"
-
-    def down(self, config_path: str | None = None) -> str:
+    def down(self, config_path: str) -> str:
         compose_cmd = "compose"
         down_cmd = "down"
 
-        if config_path is not None:
-            return (
-                f"{self.docker_cmd} {compose_cmd} -f {config_path} {down_cmd}"
-            )
-
-        return f"{self.docker_cmd} {compose_cmd} {down_cmd}"
+        return f"{self.docker_cmd} {compose_cmd} -f {config_path} {down_cmd}"
 
     def clear(self) -> str:
         clear_cmd = "system prune --all"
@@ -83,6 +75,7 @@ class PytestHelper:
 
 
 APP_PATH = "./server/main.py"
+CONFIG_PATH = "./postgres.compose.yml"
 
 env = ENVHelper()
 docker = DockerHelper()
@@ -92,27 +85,17 @@ pytest = PytestHelper()
 
 
 @task
-def up(cmd, file=""):
+def up(cmd):
     """Task for container upping."""
 
-    if file:
-        cmd.run(docker.up(file))
-
-        return
-
-    cmd.run(docker.up())
+    cmd.run(docker.up(CONFIG_PATH))
 
 
 @task
 def down(cmd, file=""):
     """Task for container downing."""
 
-    if file:
-        cmd.run(docker.down(file))
-
-        return
-
-    cmd.run(docker.down())
+    cmd.run(docker.down(CONFIG_PATH))
 
 
 @task
