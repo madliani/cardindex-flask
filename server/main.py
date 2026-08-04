@@ -115,7 +115,7 @@ class CardSerializer:
         }
 
 
-class ManyCardSerializer:
+class CardListSerializer:
     def __init__(self, cards: list[CardModel]):
         self.cards = cards
 
@@ -176,7 +176,7 @@ def cards():
 
         return {
             "status": Status.OK,
-            "cards": ManyCardSerializer(all_cards).serialize(),
+            "cards": CardListSerializer(all_cards).serialize(),
         }
 
 
