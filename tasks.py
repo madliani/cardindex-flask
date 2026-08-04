@@ -92,7 +92,7 @@ def up(cmd):
 
 
 @task
-def down(cmd, file=""):
+def down(cmd):
     """Task for container downing."""
 
     cmd.run(docker.down(CONFIG_PATH))
