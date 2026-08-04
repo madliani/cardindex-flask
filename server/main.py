@@ -143,7 +143,7 @@ class HTTPMethod(StrEnum):
     DELETE = "DELETE"
 
 
-class RoutePath(StrEnum):
+class Rule(StrEnum):
     INDEX = "/"
     HEALTH = "/health"
     CARDS = "/cards"
@@ -158,17 +158,17 @@ class Status(StrEnum):
     OK = "ok"
 
 
-@bp.route(RoutePath.INDEX)
+@bp.route(Rule.INDEX)
 def index():
     return {"status": Status.OK}, HTTPStatus.OK.value
 
 
-@bp.route(RoutePath.HEALTH)
+@bp.route(Rule.HEALTH)
 def health():
     return {"status": Status.OK}, HTTPStatus.OK.value
 
 
-@bp.route(RoutePath.CARDS, methods=[HTTPMethod.GET])
+@bp.route(Rule.CARDS, methods=[HTTPMethod.GET])
 def cards():
     if request.method == HTTPMethod.GET:
         card_repository = CardRepository(db)
@@ -181,7 +181,7 @@ def cards():
         }, HTTPStatus.OK.value
 
 
-@bp.route(RoutePath.CARD_ADD, methods=[HTTPMethod.POST])
+@bp.route(Rule.CARD_ADD, methods=[HTTPMethod.POST])
 def card_add():
     if request.method == HTTPMethod.POST:
         card_repository = CardRepository(db)
@@ -196,7 +196,7 @@ def card_add():
         }, HTTPStatus.OK.value
 
 
-@bp.route(RoutePath.CARD_DETAIL, methods=[HTTPMethod.GET])
+@bp.route(Rule.CARD_DETAIL, methods=[HTTPMethod.GET])
 def card_detail(id: int):
     if request.method == HTTPMethod.GET:
         card_repository = CardRepository(db)
@@ -217,7 +217,7 @@ def card_detail(id: int):
         }, HTTPStatus.OK.value
 
 
-@bp.route(RoutePath.CARD_UPDATE, methods=[HTTPMethod.PUT])
+@bp.route(Rule.CARD_UPDATE, methods=[HTTPMethod.PUT])
 def card_update(id: int):
     if request.method == HTTPMethod.PUT:
         card_repository = CardRepository(db)
@@ -240,7 +240,7 @@ def card_update(id: int):
         }, HTTPStatus.OK.value
 
 
-@bp.route(RoutePath.CARD_DELETE, methods=[HTTPMethod.DELETE])
+@bp.route(Rule.CARD_DELETE, methods=[HTTPMethod.DELETE])
 def card_delete(id: int):
     if request.method == HTTPMethod.DELETE:
         card_repository = CardRepository(db)
