@@ -6,3 +6,6 @@
 
 # SQLAlchemy
 server/instance/*.db
+
+# Environment variables
+*.env

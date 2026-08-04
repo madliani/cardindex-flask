@@ -8,6 +8,37 @@ class ENVHelper:
         return f"{env} {cmd}"
 
 
+class DockerHelper:
+    """Docker helper."""
+
+    docker_cmd = "docker"
+
+    def up(self, config_path: str | None = None) -> str:
+        compose_cmd = "compose"
+        up_cmd = "up -d"
+
+        if config_path is not None:
+            return f"{self.docker_cmd} {compose_cmd} -f {config_path} {up_cmd}"
+
+        return f"{self.docker_cmd} {compose_cmd} {up_cmd}"
+
+    def down(self, config_path: str | None = None) -> str:
+        compose_cmd = "compose"
+        down_cmd = "down"
+
+        if config_path is not None:
+            return (
+                f"{self.docker_cmd} {compose_cmd} -f {config_path} {down_cmd}"
+            )
+
+        return f"{self.docker_cmd} {compose_cmd} {down_cmd}"
+
+    def clear(self) -> str:
+        clear_cmd = "system prune --all"
+
+        return f"{self.docker_cmd} {clear_cmd}"
+
+
 class UVHelper:
     """uv helper."""
 
@@ -54,9 +85,41 @@ class PytestHelper:
 APP_PATH = "./server/main.py"
 
 env = ENVHelper()
+docker = DockerHelper()
 uv = UVHelper()
 sqlalchemy = SQLAlchemyHelper()
 pytest = PytestHelper()
+
+
+@task
+def up(cmd, file=""):
+    """Task for container upping."""
+
+    if file:
+        cmd.run(docker.up(file))
+
+        return
+
+    cmd.run(docker.up())
+
+
+@task
+def down(cmd, file=""):
+    """Task for container downing."""
+
+    if file:
+        cmd.run(docker.down(file))
+
+        return
+
+    cmd.run(docker.down())
+
+
+@task
+def clear(cmd):
+    """Task for Docker cleaning up."""
+
+    cmd.run(docker.clear())
 
 
 @task

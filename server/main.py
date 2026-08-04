@@ -2,6 +2,7 @@ import os
 from enum import StrEnum
 from http import HTTPStatus
 
+from dotenv import load_dotenv
 from flask import Blueprint, Flask, request
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
@@ -15,13 +16,28 @@ host = str(os.environ.get("HOST") or FLASK_HOST)
 port = int(os.environ.get("PORT") or FLASK_PORT)
 is_debug = bool(os.environ.get("DEBUG"))
 
+POSTGRES_HOST = "localhost"
+POSTGRES_PROVIDER = "postgresql+psycopg"
+
+load_dotenv()
+
+postgres_db = os.environ["POSTGRES_DB"]
+postgres_password = os.environ["POSTGRES_PASSWORD"]
+postgres_port = os.environ["POSTGRES_PORT"]
+postgres_user = os.environ["POSTGRES_USER"]
+postgres_credentials = f"{postgres_user}:{postgres_password}"
+postgres_url = f"{POSTGRES_HOST}:{postgres_port}"
+postgres_uri = (
+    f"{POSTGRES_PROVIDER}://{postgres_credentials}@{postgres_url}/{postgres_db}"
+)
+
 
 def make_app(bp: Blueprint, db: SQLAlchemy, migrate: Migrate) -> Flask:
     """Flask application factory."""
 
     app = Flask(__name__)
 
-    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cardindex.db"
+    app.config["SQLALCHEMY_DATABASE_URI"] = postgres_uri
 
     app.register_blueprint(bp)
     db.init_app(app)
