@@ -1,6 +1,5 @@
 import os
 from enum import StrEnum
-from http import HTTPStatus
 
 from dotenv import load_dotenv
 from flask import Blueprint, Flask, request
@@ -160,12 +159,12 @@ class Status(StrEnum):
 
 @bp.route(Rule.INDEX)
 def index():
-    return {"status": Status.OK}, HTTPStatus.OK.value
+    return {"status": Status.OK}
 
 
 @bp.route(Rule.HEALTH)
 def health():
-    return {"status": Status.OK}, HTTPStatus.OK.value
+    return {"status": Status.OK}
 
 
 @bp.route(Rule.CARDS, methods=[HTTPMethod.GET])
@@ -178,7 +177,7 @@ def cards():
         return {
             "status": Status.OK,
             "cards": ManyCardSerializer(all_cards).serialize(),
-        }, HTTPStatus.OK.value
+        }
 
 
 @bp.route(Rule.CARD_ADD, methods=[HTTPMethod.POST])
@@ -193,7 +192,7 @@ def card_add():
         return {
             "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
-        }, HTTPStatus.OK.value
+        }
 
 
 @bp.route(Rule.CARD_DETAIL, methods=[HTTPMethod.GET])
@@ -214,7 +213,7 @@ def card_detail(id: int):
         return {
             "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
-        }, HTTPStatus.OK.value
+        }
 
 
 @bp.route(Rule.CARD_UPDATE, methods=[HTTPMethod.PUT])
@@ -237,7 +236,7 @@ def card_update(id: int):
         return {
             "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
-        }, HTTPStatus.OK.value
+        }
 
 
 @bp.route(Rule.CARD_DELETE, methods=[HTTPMethod.DELETE])
@@ -258,7 +257,7 @@ def card_delete(id: int):
         return {
             "status": Status.OK,
             "card": OneCardSerializer(card).serialize(),
-        }, HTTPStatus.OK.value
+        }
 
 
 app = make_app(bp=bp, db=db, migrate=migrate)
