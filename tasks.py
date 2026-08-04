@@ -50,19 +50,19 @@ class SQLAlchemyHelper:
     flask_cmd = "flask"
     db_cmd = "db"
 
-    def migrate(self, app_path: str, msg: str) -> str:
+    def migrate(self, app: str, msg: str) -> str:
         """Migrate command."""
 
         migrate_cmd = f'migrate -m "{msg}"' if msg else "migrate"
 
-        return f"{self.flask_cmd} --app {app_path} {self.db_cmd} {migrate_cmd}"
+        return f"{self.flask_cmd} --app {app} {self.db_cmd} {migrate_cmd}"
 
-    def upgrade(self, app_path: str) -> str:
+    def upgrade(self, app: str) -> str:
         """Upgrade database."""
 
         upgrade_cmd = "upgrade"
 
-        return f"{self.flask_cmd} --app {app_path} {self.db_cmd} {upgrade_cmd}"
+        return f"{self.flask_cmd} --app {app} {self.db_cmd} {upgrade_cmd}"
 
 
 class PytestHelper:
@@ -74,7 +74,7 @@ class PytestHelper:
         return self.pytest_cmd
 
 
-APP_PATH = "./server/main.py"
+FLASK_APP = "./server/main.py"
 CONFIG_PATH = "./postgres.compose.yml"
 
 env = ENVHelper()
@@ -110,19 +110,19 @@ def serve(cmd, debug=False):
     """Task for server starting."""
 
     if debug:
-        cmd.run(env.with_env(cmd=uv.run(APP_PATH), env="DEBUG=True"))
+        cmd.run(env.with_env(cmd=uv.run(FLASK_APP), env="DEBUG=True"))
 
         return
 
-    cmd.run(uv.run(APP_PATH))
+    cmd.run(uv.run(FLASK_APP))
 
 
 @task
 def migrate(cmd, msg=""):
     """Task for database migrating."""
 
-    cmd.run(uv.run(sqlalchemy.migrate(app_path=APP_PATH, msg=msg)))
-    cmd.run(uv.run(sqlalchemy.upgrade(APP_PATH)))
+    cmd.run(uv.run(sqlalchemy.migrate(app=FLASK_APP, msg=msg)))
+    cmd.run(uv.run(sqlalchemy.upgrade(FLASK_APP)))
 
 
 @task
