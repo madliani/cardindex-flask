@@ -8,11 +8,11 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Mapped, mapped_column
 from werkzeug.exceptions import HTTPException, NotFound
 
-DEFAULT_HOST = "localhost"
-DEFAULT_PORT = 5_000
+FLASK_HOST = "localhost"
+FLASK_PORT = 5_000
 
-host = str(os.environ.get("HOST") or DEFAULT_HOST)
-port = int(os.environ.get("PORT") or DEFAULT_PORT)
+host = str(os.environ.get("HOST") or FLASK_HOST)
+port = int(os.environ.get("PORT") or FLASK_PORT)
 is_debug = bool(os.environ.get("DEBUG"))
 
 
