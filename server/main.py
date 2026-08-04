@@ -103,7 +103,7 @@ class CardRepository:
         return card
 
 
-class OneCardSerializer:
+class CardSerializer:
     def __init__(self, card: CardModel):
         self.card = card
 
@@ -120,7 +120,7 @@ class ManyCardSerializer:
         self.cards = cards
 
     def serialize(self):
-        return [OneCardSerializer(card).serialize() for card in self.cards]
+        return [CardSerializer(card).serialize() for card in self.cards]
 
 
 class HTTPExceptionSerializer:
@@ -191,7 +191,7 @@ def card_add():
 
         return {
             "status": Status.OK,
-            "card": OneCardSerializer(card).serialize(),
+            "card": CardSerializer(card).serialize(),
         }
 
 
@@ -212,7 +212,7 @@ def card_detail(id: int):
 
         return {
             "status": Status.OK,
-            "card": OneCardSerializer(card).serialize(),
+            "card": CardSerializer(card).serialize(),
         }
 
 
@@ -235,7 +235,7 @@ def card_update(id: int):
 
         return {
             "status": Status.OK,
-            "card": OneCardSerializer(card).serialize(),
+            "card": CardSerializer(card).serialize(),
         }
 
 
@@ -256,7 +256,7 @@ def card_delete(id: int):
 
         return {
             "status": Status.OK,
-            "card": OneCardSerializer(card).serialize(),
+            "card": CardSerializer(card).serialize(),
         }
 
 
