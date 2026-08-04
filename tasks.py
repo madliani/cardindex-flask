@@ -13,17 +13,17 @@ class DockerHelper:
 
     docker_cmd = "docker"
 
-    def up(self, config_path: str) -> str:
+    def up(self, compose_file: str) -> str:
         compose_cmd = "compose"
         up_cmd = "up -d"
 
-        return f"{self.docker_cmd} {compose_cmd} -f {config_path} {up_cmd}"
+        return f"{self.docker_cmd} {compose_cmd} -f {compose_file} {up_cmd}"
 
-    def down(self, config_path: str) -> str:
+    def down(self, compose_file: str) -> str:
         compose_cmd = "compose"
         down_cmd = "down"
 
-        return f"{self.docker_cmd} {compose_cmd} -f {config_path} {down_cmd}"
+        return f"{self.docker_cmd} {compose_cmd} -f {compose_file} {down_cmd}"
 
     def clear(self) -> str:
         clear_cmd = "system prune --all"
@@ -75,7 +75,7 @@ class PytestHelper:
 
 
 FLASK_APP = "./server/main.py"
-CONFIG_PATH = "./postgres.compose.yml"
+COMPOSE_FILE = "./postgres.compose.yml"
 
 env = ENVHelper()
 docker = DockerHelper()
@@ -88,14 +88,14 @@ pytest = PytestHelper()
 def up(cmd):
     """Task for container upping."""
 
-    cmd.run(docker.up(CONFIG_PATH))
+    cmd.run(docker.up(COMPOSE_FILE))
 
 
 @task
 def down(cmd):
     """Task for container downing."""
 
-    cmd.run(docker.down(CONFIG_PATH))
+    cmd.run(docker.down(COMPOSE_FILE))
 
 
 @task
