@@ -1,4 +1,4 @@
-from server.bp import bp
+from server.blueprint import bp
 from server.enums import Rule, Status
 
 

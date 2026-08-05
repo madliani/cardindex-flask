@@ -1,6 +1,6 @@
 from . import (
     app,  # noqa: F401
-    bp,  # noqa: F401
+    blueprint,  # noqa: F401
     config,  # noqa: F401
     database,  # noqa: F401
     models,  # noqa: F401
