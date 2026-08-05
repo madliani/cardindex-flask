@@ -67,6 +67,17 @@ class PytestHelper:
         return self.pytest_cmd
 
 
+class TYHelper:
+    """ty helper."""
+
+    ty_cmd = "ty"
+
+    def check(self, path: str):
+        check_cmd = "check --fix"
+
+        return f"{self.ty_cmd} {check_cmd} {path}"
+
+
 class RuffHelper:
     """Ruff helper."""
 
@@ -86,6 +97,7 @@ docker = DockerHelper()
 uv = UVHelper()
 sqlalchemy = SQLAlchemyHelper()
 pytest = PytestHelper()
+ty = TYHelper()
 ruff = RuffHelper()
 
 
@@ -134,6 +146,7 @@ def test(cmd):
 
 @task
 def check(cmd):
-    """Task for project linting and formatting."""
+    """Task for project type checking, linting and formatting."""
 
+    cmd.run(uv.run(ty.check(PROJECT_ROOT)))
     cmd.run(uv.run(ruff.check(PROJECT_ROOT)))

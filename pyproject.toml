@@ -20,4 +20,5 @@ dev = [
     "invoke>=3.0.3",
     "pytest>=9.1.1",
     "sqlalchemy>=2.0.51",
+    "ty>=0.0.66",
 ]
