@@ -2,7 +2,7 @@ from flask import request
 from werkzeug.exceptions import NotFound
 
 from server.bp import bp
-from server.db import db
+from server.database import db
 from server.enums import HTTPMethod, Rule, Status
 from server.repositories import CardRepository
 from server.utils import (

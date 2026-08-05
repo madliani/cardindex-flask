@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Mapped, mapped_column
 
-from server.db import db
+from server.database import db
 
 
 # ty:ignore[unsupported-base]

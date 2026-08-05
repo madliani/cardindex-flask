@@ -1,7 +1,7 @@
 from server.app import make_app
 from server.bp import bp
 from server.config import flask_host, flask_port, is_debug_mode, postgres_uri
-from server.db import db, migrate
+from server.database import db, migrate
 
 app = make_app(bp=bp, db=db, migrate=migrate, postgres_uri=postgres_uri)
 
