@@ -1,5 +1,5 @@
 from . import (
-    app,  # noqa: F401
+    application,  # noqa: F401
     blueprint,  # noqa: F401
     config,  # noqa: F401
     database,  # noqa: F401

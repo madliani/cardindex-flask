@@ -1,4 +1,4 @@
-from server.app import make_app
+from server.application import make_app
 from server.blueprint import bp
 from server.config import flask_host, flask_port, is_debug_mode, postgres_uri
 from server.database import db, migrate
