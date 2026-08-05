@@ -1,6 +1,6 @@
 from json import loads
 
-from server.main import Status
+from server.enums import Status
 
 
 def test_index(test_client):

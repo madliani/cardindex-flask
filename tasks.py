@@ -79,7 +79,7 @@ class RuffHelper:
 
 
 PROJECT_ROOT = "./"
-FLASK_APP = "./server/main.py"
+FLASK_APP = "./main.py"
 COMPOSE_FILE = "./postgres.compose.yml"
 
 docker = DockerHelper()
