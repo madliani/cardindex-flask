@@ -3,6 +3,8 @@
 
 # CPython
 **/__pycache__/
+
+# pip
 .venv/
 
 # Ruff
