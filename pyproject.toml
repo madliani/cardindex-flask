@@ -1,5 +1,5 @@
 [project]
-description = "A Flask-based server side of a full stack project CardIndex."
+description = "A Flask-based server for the CardIndex web application."
 name = "cardindex-flask"
 readme = "README.md"
 requires-python = ">=3.14"
