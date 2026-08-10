@@ -9,6 +9,3 @@
 
 # pytest
 **/.pytest_cache/
-
-# SQLAlchemy
-server/instance/*.db
