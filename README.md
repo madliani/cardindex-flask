@@ -1,3 +1,4 @@
 # CardIndex Flask
 
-This is a Flask-based server side for a full stack project CardIndex.
+This is the Flask-based server-side part of the full-stack CardIndex web
+application.
